@@ -2,15 +2,12 @@ package premailer
 
 import (
 	"fmt"
+	"github.com/vanng822/css"
+	"golang.org/x/net/html"
 	"regexp"
 	"sort"
 	"strconv"
 	"strings"
-	"sync"
-
-	"github.com/PuerkitoBio/goquery"
-	"github.com/vanng822/css"
-	"golang.org/x/net/html"
 )
 
 // Premailer is the inteface of Premailer
@@ -105,22 +102,18 @@ func (pr *premailer) sortRules() {
 }
 
 func (pr *premailer) collectRules() {
-	var wg sync.WaitGroup
 	pr.doc.Find("style:not([data-premailer='ignore'])").Each(func(_ int, s *goquery.Selection) {
 		if media, exist := s.Attr("media"); exist && media != "all" {
 			return
 		}
-		wg.Add(1)
 		pr.allRules = append(pr.allRules, nil)
-		go func(ruleSetIndex int) {
-			defer wg.Done()
-			ss := css.Parse(s.Text())
-			pr.allRules[ruleSetIndex] = ss.GetCSSRuleList()
-			s.ReplaceWithHtml("")
-		}(len(pr.allRules) - 1)
-	})
-	wg.Wait()
 
+		for i := range pr.allRules {
+			ss := css.Parse(s.Text())
+			pr.allRules[i] = ss.GetCSSRuleList()
+			s.ReplaceWithHtml("")
+		}
+	})
 }
 
 func (pr *premailer) collectElements() {

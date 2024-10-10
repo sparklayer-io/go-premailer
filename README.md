@@ -2,6 +2,8 @@
 
 Inline styling for HTML mail in golang
 
+SparkLayer fork adds a temporary fix for a race condition when the HTML contains multiple style elements.
+
 # Document
 [![GoDoc](https://godoc.org/github.com/vanng822/go-premailer/premailer?status.svg)](https://godoc.org/github.com/vanng822/go-premailer/premailer)
 [![Go Report Card](https://goreportcard.com/badge/github.com/vanng822/go-premailer)](https://goreportcard.com/report/github.com/vanng822/go-premailer)
