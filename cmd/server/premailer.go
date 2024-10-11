@@ -9,8 +9,8 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/sparklayer-io/go-premailer/premailer"
 	"github.com/unrolled/render"
-	"github.com/vanng822/go-premailer/premailer"
 	"github.com/vanng822/r2router"
 )
 
