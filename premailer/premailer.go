@@ -2,6 +2,7 @@ package premailer
 
 import (
 	"fmt"
+	"github.com/PuerkitoBio/goquery"
 	"github.com/vanng822/css"
 	"golang.org/x/net/html"
 	"regexp"
@@ -107,12 +108,10 @@ func (pr *premailer) collectRules() {
 			return
 		}
 		pr.allRules = append(pr.allRules, nil)
-
-		for i := range pr.allRules {
-			ss := css.Parse(s.Text())
-			pr.allRules[i] = ss.GetCSSRuleList()
-			s.ReplaceWithHtml("")
-		}
+		i := len(pr.allRules) - 1
+		ss := css.Parse(s.Text())
+		pr.allRules[i] = ss.GetCSSRuleList()
+		s.ReplaceWithHtml("")
 	})
 }
 
